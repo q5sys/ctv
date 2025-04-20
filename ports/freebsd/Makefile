@@ -4,7 +4,7 @@ PORTNAME=	ctv
 PORTVERSION=	1.0.0
 CATEGORIES=	textproc
 
-MAINTAINER=	ports@FreeBSD.org
+MAINTAINER=	jt@obs-sec.com
 COMMENT=	Command-line Text Viewer - a simple interactive text-based file browser
 
 LICENSE=	MIT
