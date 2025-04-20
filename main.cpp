@@ -8,8 +8,99 @@
 #include <sstream>
 #include <cstring>
 #include <memory>
+#include <unordered_set>
 
 namespace fs = std::filesystem;
+
+// Function to initialize the set of supported file extensions
+std::unordered_set<std::string> initSupportedExtensions() {
+    std::unordered_set<std::string> extensions;
+    
+    // Add all supported extensions with dot prefix
+    // Common text and config files
+    extensions.insert(".txt");
+    extensions.insert(".md");
+    extensions.insert(".markdown");
+    extensions.insert(".conf");
+    extensions.insert(".ini");
+    extensions.insert(".cfg");
+    extensions.insert(".properties");
+    
+    // Shell scripts
+    extensions.insert(".sh");
+    extensions.insert(".bash");
+    extensions.insert(".ksh");
+    extensions.insert(".csh");
+    extensions.insert(".zsh");
+    
+    // Programming languages
+    extensions.insert(".c");
+    extensions.insert(".h");
+    extensions.insert(".cpp");
+    extensions.insert(".hpp");
+    extensions.insert(".cc");
+    extensions.insert(".cxx");
+    extensions.insert(".cs");
+    extensions.insert(".java");
+    extensions.insert(".py");
+    extensions.insert(".rb");
+    extensions.insert(".js");
+    extensions.insert(".ts");
+    extensions.insert(".php");
+    extensions.insert(".pl");
+    extensions.insert(".pm");
+    extensions.insert(".go");
+    extensions.insert(".rs");
+    extensions.insert(".swift");
+    extensions.insert(".lua");
+    extensions.insert(".r");
+    extensions.insert(".scala");
+    extensions.insert(".groovy");
+    extensions.insert(".kt");
+    extensions.insert(".dart");
+    
+    // Web development
+    extensions.insert(".html");
+    extensions.insert(".htm");
+    extensions.insert(".css");
+    extensions.insert(".scss");
+    extensions.insert(".sass");
+    extensions.insert(".less");
+    extensions.insert(".json");
+    extensions.insert(".xml");
+    extensions.insert(".svg");
+    extensions.insert(".jsx");
+    extensions.insert(".tsx");
+    
+    // Data formats
+    extensions.insert(".csv");
+    extensions.insert(".yaml");
+    extensions.insert(".yml");
+    extensions.insert(".toml");
+    
+    // Documentation
+    extensions.insert(".rst");
+    extensions.insert(".adoc");
+    extensions.insert(".tex");
+    extensions.insert(".man");
+    
+    // Build and project files
+    extensions.insert(".pro");
+    extensions.insert(".cmake");
+    extensions.insert(".make");
+    extensions.insert(".mk");
+    extensions.insert(".mak");
+    extensions.insert(".gradle");
+    extensions.insert(".pom");
+    
+    // Other common text-based files
+    extensions.insert(".log");
+    extensions.insert(".diff");
+    extensions.insert(".patch");
+    extensions.insert(".sql");
+    
+    return extensions;
+}
 
 // Structure to hold file/directory information
 struct FileEntry {
@@ -30,10 +121,15 @@ private:
     int startIndex = 0;
     int maxDisplayEntries = 0;
     WINDOW* window;
+    std::unordered_set<std::string> supportedExtensions;
     
 public:
     FileBrowser(WINDOW* win) : window(win) {
         currentPath = fs::current_path().string();
+        
+        // Initialize supported extensions
+        supportedExtensions = initSupportedExtensions();
+        
         refreshEntries();
     }
     
@@ -48,11 +144,9 @@ public:
             if (entry.is_directory()) {
                 entries.push_back(FileEntry(entry.path().filename().string(), true));
             } else if (entry.is_regular_file()) {
-                // Filter files similar to the original application
+                // Get file extension and check if it's supported
                 std::string ext = entry.path().extension().string();
-                if (ext == ".txt" || ext == ".sh" || ext == ".md" || 
-                    ext == ".pro" || ext == ".cpp" || ext == ".h" || 
-                    ext == ".conf") {
+                if (supportedExtensions.find(ext) != supportedExtensions.end()) {
                     entries.push_back(FileEntry(entry.path().filename().string(), false, entry.file_size()));
                 }
             }
