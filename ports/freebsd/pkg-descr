@@ -8,7 +8,7 @@ Features:
 - Directory navigation using arrow keys
 - File listing with size information
 - Text file viewing with line numbers
-- File filtering (supports hundreds of file extensions for text and source code files)
+- File filtering (supports many of file extensions for text and source code files)
 - Keyboard shortcuts for navigation
 
 WWW: https://github.com/q5sys/ctv
