@@ -2,6 +2,8 @@
 
 A simple interactive text-based file browser and text viewer for Linux, written in C++.
 
+![image](https://github.com/user-attachments/assets/a150d6e6-fd66-4bd4-8234-01ecbfea1dff)
+
 ## Overview
 
 CTV is a command-line version of my Qt-based text viewer found here https://github.com/q5sys/qtv . It provides an interactive TUI (Text User Interface) that allows you to:
