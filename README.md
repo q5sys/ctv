@@ -24,7 +24,7 @@ CTV is a command-line version of my Qt-based text viewer found here https://gith
 - C++17 compatible compiler (GCC 8+ or Clang 5+)
 - CMake 3.10 or higher
 - ncurses library
-- Linux operating system
+- Builds on Linux and FreeBSD
 
 ## Building
 
