@@ -12,8 +12,12 @@ include_directories(${CURSES_INCLUDE_DIR})
 # Add executable
 add_executable(ctv main.cpp)
 
-# Link with required libraries
-target_link_libraries(ctv PRIVATE stdc++fs ${CURSES_LIBRARIES})
+# Check if we need to link against stdc++fs (not needed on FreeBSD)
+if(CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
+    target_link_libraries(ctv PRIVATE ${CURSES_LIBRARIES})
+else()
+    target_link_libraries(ctv PRIVATE stdc++fs ${CURSES_LIBRARIES})
+endif()
 
 # Install target
 install(TARGETS ctv DESTINATION bin)
