@@ -12,6 +12,10 @@
 
 namespace fs = std::filesystem;
 
+// Define color pairs
+#define COLOR_DIRECTORY 1
+#define COLOR_TEXT_FILE 2
+
 // Function to initialize the set of supported file extensions
 std::unordered_set<std::string> initSupportedExtensions() {
     std::unordered_set<std::string> extensions;
@@ -217,10 +221,16 @@ public:
             // Format entry display
             std::string entryDisplay;
             if (entry.isDirectory) {
+                // Apply blue color for directories
+                wattron(window, COLOR_PAIR(COLOR_DIRECTORY));
                 entryDisplay = "[" + entry.name + "]";
                 mvwprintw(window, i + 3, 2, "%-*s %10s", width - 15, entryDisplay.c_str(), "<DIR>");
+                wattroff(window, COLOR_PAIR(COLOR_DIRECTORY));
             } else {
+                // Apply green color for text files
+                wattron(window, COLOR_PAIR(COLOR_TEXT_FILE));
                 mvwprintw(window, i + 3, 2, "%-*s %10lu", width - 15, entry.name.c_str(), entry.size);
+                wattroff(window, COLOR_PAIR(COLOR_TEXT_FILE));
             }
             
             if (entryIndex == selectedIndex) {
@@ -407,6 +417,13 @@ public:
         noecho();
         keypad(stdscr, TRUE);
         curs_set(0); // Hide cursor
+        
+        // Initialize colors if terminal supports them
+        if (has_colors()) {
+            start_color();
+            init_pair(COLOR_DIRECTORY, COLOR_BLUE, COLOR_BLACK);
+            init_pair(COLOR_TEXT_FILE, COLOR_GREEN, COLOR_BLACK);
+        }
         
         // Create windows
         int maxY, maxX;
