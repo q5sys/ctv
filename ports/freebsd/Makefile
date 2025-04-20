@@ -1,12 +1,12 @@
 # $FreeBSD$
 
 PORTNAME=       ctv
-PORTVERSION=    1.1.0
+PORTVERSION=    1.0.0
 CATEGORIES=     textproc
 USE_GITHUB=    yes
 GH_ACCOUNT=    q5sys
 GH_PROJECT=    ctv
-GH_TAGNAME=    1.1.0
+GH_TAGNAME=    1.0.0
 
 MAINTAINER=     jt@obs-sec.com
 COMMENT=        Command-line Text Viewer - a simple interactive text-based file browser
